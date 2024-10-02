@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PYQ Processor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        #pyq-list {
+            margin-top: 20px;
+        }
+        .pyq {
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>PYQ Processor</h1>
+    <form id="upload-form" method="POST" enctype="multipart/form-data" action="/upload">
+        <input type="file" name="pdfs" multiple>
+        <button type="submit">Upload PDFs</button>
+    </form>
+    <button id="clear-button" type="button" onclick="clearHistory()">Clear History</button>
+    <div id="pyq-list">
+        {% if pyq_responses.pyqs %}
+            {% for pyq in pyq_responses.pyqs %}
+                <div class="pyq">
+                    <h3>Question:</h3>
+                    <p>{{ pyq.question }}</p>
+                    <h3>Subtopic:</h3>
+                    <p>{{ pyq.subtopic }}</p>
+                    <h3>Marks:</h3>
+                    <p>{{ pyq.marks }}</p>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No PYQs processed yet.</p>
+        {% endif %}
+    </div>
+
+    <script>
+        function clearHistory() {
+            fetch('/clear', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({}) 
+            })
+            .then(() => window.location.reload());
+        }
+        
+        function getPyqResponses() {
+            fetch('/get_pyq_responses', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => console.log(data));
+        }
+    </script>
+</body>
+</html>

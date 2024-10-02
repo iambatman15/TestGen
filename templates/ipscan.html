@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Question Paper Generator</title>
+</head>
+<body>
+    <div style="max-width: 800px; margin: 40px auto; padding: 20px; background-color: #fff; border: 1px solid #ddd; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+        <h1 style="text-align: center; margin-bottom: 20px; color: #333;">Question Paper Generator</h1>
+        <form method="POST" enctype="multipart/form-data">
+            <div style="margin-bottom: 20px;">
+                <label>No. of Sections:</label>
+                <input type="number" name="num_sections" id="num_sections" required style="padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+                <button type="button" onclick="addSections()" style="background-color: #4CAF50; color: #fff; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">Add Sections</button>
+                <div id="sections"></div>
+            </div>
+            <div style="margin-bottom: 20px;">
+                <label>PYQ Upload:</label>
+                <input type="file" name="pyq_upload" style="padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+                <br>
+                <label>Weightage for PYQs (%):</label>
+                <input type="number" name="pyq_weightage" style="padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+                <br>
+                <label>Content Upload:</label>
+                <input type="file" name="content_upload" style="padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+                <br>
+                <label>Focus Topics:</label>
+                <textarea name="focus_topics" style="padding: 10px; border: 1px solid #ccc; border-radius: 5px;"></textarea>
+            </div>
+            <div style="text-align: center;">
+                <button type="submit" name="action" value="save_config" style="background-color: #4CAF50; color: #fff; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; margin: 0 10px;">Save Configuration</button>
+                <button type="submit" name="action" value="generate_qp" style="background-color: #4CAF50; color: #fff; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; margin: 0 10px;">Generate Question Paper</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        function addSections() {
+            const numSections = document.getElementById("num_sections").value;
+            const sectionsDiv = document.getElementById("sections");
+            sectionsDiv.innerHTML = "";
+
+            for (let i = 0; i < numSections; i++) {
+                const sectionHtml = `
+                    <div style="margin-bottom: 20px; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                        <h3>Section ${i + 1}</h3>
+                        <label>Type:</label>
+                        <select name="section_${i}_type" style="padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+                            <option value="answer_the_following">Answer the following</option>
+                            <option value="write_short_note">Write short note</option>
+                            <option value="answer_in_brief">Answer in brief</option>
+                        </select>
+                        <br>
+                        <label>No. of Questions:</label>
+                        <input type="number" name="section_${i}_num_questions" required style="padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+                        <br>
+                        <label>Marks:</label>
+                        <input type="number" name="section_${i}_marks" required style="padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+                    </div>
+                `;
+                sectionsDiv.innerHTML += sectionHtml;
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document Processing</title>
+    <style>
+        /* Your styles here */
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="left">
+            <img src="buddy.jpg" alt="Exabuddy Image">
+        </div>
+        <div class="right">
+            <h1>Document Processing</h1>
+            <form action="/upload" method="POST" enctype="multipart/form-data">
+                <input type="file" name="pdfs" multiple>
+                <button type="submit">Submit & Process</button>
+            </form>
+            
+            <h2>PDF Responses:</h2>
+            <div class="pdf-responses">
+                {% for response in pdf_responses.responses %}
+                    <p>{{ response }}</p>
+                {% endfor %}
+            </div>
+            
+            <form action="/clear" method="POST">
+                <button type="submit">Clear History</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

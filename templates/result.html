@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generated Questions</title>
+</head>
+<body>
+    <h1>Generated Questions</h1>
+    <div>
+        {% if result %}
+            {% for section, data in result.items() %}
+                <h2>{{ section }}</h2>
+                <ul>
+                    {% for question in data['Questions'] %}
+                        <li>
+                            <strong>Question No:</strong> {{ question['Question No'] }}<br>
+                            <strong>Question:</strong> {{ question['Question'] }}<br>
+                            <strong>Marks:</strong> {{ question['Marks'] }}<br>
+                            <strong>Subtopic:</strong> {{ question['Subtopic'] }}<br>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endfor %}
+        {% else %}
+            <p>No questions generated.</p>
+        {% endif %}
+    </div>
+</body>
+</html>
